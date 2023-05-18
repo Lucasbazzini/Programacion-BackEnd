@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'fs'
 
 export default class ProductManager {
     constructor(path) {
@@ -57,17 +57,19 @@ export default class ProductManager {
             console.error("No se encontró el producto");
             return;
         }
+        console.log("Producto con el ID solicitado:", product);
     }
 
     archivarProds() {
         const jsonData = JSON.stringify(this.products);
         fs.writeFileSync(this.path, jsonData, (error) => {
             if (error) {
-                console.log(error);
+                console.error(error);
             } else {
+                console.log("Productos archivados correctamente");
                 fs.readFile(this.path, "utf-8", (error, resultado) => {
                     if (error) {
-                        console.log(error);
+                        console.error(error);
                     } else {
                         console.log(resultado);
                     }
@@ -86,4 +88,8 @@ pManager.addProduct("Hamburguesa", "con queso", 20, "url", 126, 25);
 pManager.addProduct("fideos", "con queso", 20, "url", 127, 25);
 pManager.addProduct("fideos", "con queso", 20, "url", 128, 25);
 pManager.updateProduct(4, { title: "Papas", description: "Papas fritas", price: 70, url: "google.com/fideos", code: 135, stock: 24 });
+console.log(pManager.getProducts());
+
+
+
 pManager.archivarProds();

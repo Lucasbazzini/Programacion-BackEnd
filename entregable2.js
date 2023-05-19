@@ -5,18 +5,20 @@ class ProductManager {
         this.products = [];
         this.id = 1;
         this.path = path;
+        this.loadProducts(); // Agregado: Carga los productos al inicializar la instancia
     }
 
     addProduct(title, description, price, url, code, stock) {
         if (title && description && price && url && code && stock) {
             const verificationCode = this.products.some(product => product.code === code);
             if (verificationCode) {
-                console.error("ERROR: El codigo está repetido");
+                console.error("ERROR: El código está repetido");
             } else {
                 let id = this.id++;
                 const newProduct = { id, title, description, price, url, code, stock };
                 this.products.push(newProduct);
                 console.log("Producto agregado correctamente");
+                this.archivarProds();
             }
         } else {
             console.error("ERROR: Debe completar todos los campos");
@@ -31,6 +33,7 @@ class ProductManager {
         }
         const deletedProduct = this.products.splice(index, 1);
         console.log("Producto eliminado correctamente:", deletedProduct);
+        this.archivarProds();
     }
 
     updateProduct(id, newObject) {
@@ -45,6 +48,7 @@ class ProductManager {
         };
         this.products[productIndex] = updatedProduct;
         console.log("Producto actualizado correctamente");
+        this.archivarProds();
     }
 
     getProducts() {
@@ -60,22 +64,29 @@ class ProductManager {
         console.log("Producto con el ID solicitado:", product);
     }
 
-    archivarProds() {
-        const jsonData = JSON.stringify(this.products);
-        fs.writeFileSync(this.path, jsonData, (error) => {
-            if (error) {
-                console.error(error);
+    loadProducts() {
+        try {
+            const data = fs.readFileSync(this.path, "utf-8");
+            this.products = JSON.parse(data);
+            console.log("Productos cargados correctamente");
+        } catch (error) {
+            if (error.code === "ENOENT") {
+                console.log("El archivo no existe. Se creará uno nuevo.");
+                this.archivarProds(); // Crea el archivo si no existe al cargar los productos
             } else {
-                console.log("Productos archivados correctamente");
-                fs.readFile(this.path, "utf-8", (error, resultado) => {
-                    if (error) {
-                        console.error(error);
-                    } else {
-                        console.log(resultado);
-                    }
-                });
+                console.error(error);
             }
-        });
+        }
+    }
+
+    archivarProds() {
+        try {
+            const jsonData = JSON.stringify(this.products);
+            fs.writeFileSync(this.path, jsonData);
+            console.log("Productos archivados correctamente");
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
@@ -89,7 +100,4 @@ pManager.addProduct("fideos", "con queso", 20, "url", 127, 25);
 pManager.addProduct("fideos", "con queso", 20, "url", 128, 25);
 pManager.updateProduct(4, { title: "Papas", description: "Papas fritas", price: 70, url: "google.com/fideos", code: 135, stock: 24 });
 console.log(pManager.getProducts());
-
-
-
 pManager.archivarProds();

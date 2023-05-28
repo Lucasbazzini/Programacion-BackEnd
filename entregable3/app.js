@@ -1,29 +1,62 @@
 import express from 'express';
-import ProductManager from './ProductManager.js';
+import ProductManager from './ProductManager';
 
 const productManager = new ProductManager('./productos.json');
 
 const app = express();
 
-app.get('/products', (req, res) => {
-  const limit = req.query.limit; 
-  let products = productManager.getProducts();
+app.use(express.json());
 
-  if (limit) {
-    products = products.slice(0, parseInt(limit)); 
-  }
+app.get('/api/products', (req, res) => {
+  const limit = req.query.limit;
+  let products = productManager.getProducts(limit);
 
-  res.send(JSON.stringify(products));
+  res.json(products);
 });
 
-app.get('/products/:id', (req, res) => {
+app.get('/api/products/:id', (req, res) => {
   const productId = parseInt(req.params.id);
   const product = productManager.getProductById(productId);
   if (product) {
-    res.send(JSON.stringify(product));
+    res.json(product);
   } else {
-    res.send('Producto no encontrado');
+    res.status(404).json({ error: 'Producto no encontrado' });
   }
+});
+
+app.post('/api/products', (req, res) => {
+  const { title, description, price, code, stock, thumbnails } = req.body;
+  productManager.addProduct(title, description, price, code, stock, thumbnails);
+  res.sendStatus(201);
+});
+
+app.put('/api/products/:id', (req, res) => {
+  const productId = parseInt(req.params.id);
+  const updatedProduct = req.body;
+  productManager.updateProduct(productId, updatedProduct);
+  res.sendStatus(200);
+});
+
+app.delete('/api/products/:id', (req, res) => {
+  const productId = parseInt(req.params.id);
+  productManager.deleteProduct(productId);
+  res.sendStatus(200);
+});
+
+app.post('/api/carts', (req, res) => {
+  const { products } = req.body;
+  if (!products || !Array.isArray(products) || products.length === 0) {
+    res.status(400).json({ error: 'Debe proporcionar productos válidos' });
+    return;
+  }
+
+  const cartId = generateCartId();
+  const newCart = {
+    id: cartId,
+    products: products
+  };
+
+  res.status(201).json({ id: cartId, message: 'Carrito creado exitosamente' });
 });
 
 app.listen(8080, () => {

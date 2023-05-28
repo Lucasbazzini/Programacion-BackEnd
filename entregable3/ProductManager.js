@@ -5,20 +5,20 @@ class ProductManager {
     this.products = [];
     this.id = 1;
     this.path = path;
-    this.loadProducts(); 
+    this.loadProducts();
   }
 
-  addProduct(title, description, price, url, code, stock) {
-    if (title && description && price && url && code && stock) {
+  addProduct(title, description, price, code, stock, thumbnails = []) {
+    if (title && description && price && code && stock) {
       const verificationCode = this.products.some(product => product.code === code);
       if (verificationCode) {
         console.error('ERROR: El código está repetido');
       } else {
-        let id = this.id++;
-        const newProduct = { id, title, description, price, url, code, stock };
+        const id = this.id++;
+        const newProduct = { id, title, description, price, code, stock, thumbnails, status: true, category: '' };
         this.products.push(newProduct);
         console.log('Producto agregado correctamente');
-        this.archivarProds();
+        this.archiveProducts();
       }
     } else {
       console.error('ERROR: Debe completar todos los campos');
@@ -33,7 +33,7 @@ class ProductManager {
     }
     const deletedProduct = this.products.splice(index, 1);
     console.log('Producto eliminado correctamente:', deletedProduct);
-    this.archivarProds();
+    this.archiveProducts();
   }
 
   updateProduct(id, newObject) {
@@ -48,14 +48,14 @@ class ProductManager {
     };
     this.products[productIndex] = updatedProduct;
     console.log('Producto actualizado correctamente');
-    this.archivarProds();
+    this.archiveProducts();
   }
 
   getProducts(limit) {
     if (limit) {
-      return this.products.slice(0, limit); 
+      return this.products.slice(0, limit);
     }
-    return this.products; 
+    return this.products;
   }
 
   getProductById(id) {
@@ -76,14 +76,14 @@ class ProductManager {
     } catch (error) {
       if (error.code === 'ENOENT') {
         console.log('El archivo no existe. Se creará uno nuevo.');
-        this.archivarProds(); 
+        this.archiveProducts();
       } else {
         console.error(error);
       }
     }
   }
 
-  archivarProds() {
+  archiveProducts() {
     try {
       const jsonData = JSON.stringify(this.products);
       fs.writeFileSync(this.path, jsonData);

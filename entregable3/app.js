@@ -1,11 +1,18 @@
 import express from 'express';
-import ProductManager from './ProductManager';
+import ProductManager from './ProductManager.js';
 
 const productManager = new ProductManager('./productos.json');
+productManager.archiveProducts(); 
 
 const app = express();
 
 app.use(express.json());
+
+function generateCartId() {
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 1000);
+  return `${timestamp}-${random}`;
+}
 
 app.get('/api/products', (req, res) => {
   const limit = req.query.limit;
@@ -43,7 +50,7 @@ app.delete('/api/products/:id', (req, res) => {
   res.sendStatus(200);
 });
 
-app.post('/api/carts', (req, res) => {
+app.post('/api/cart', (req, res) => {
   const { products } = req.body;
   if (!products || !Array.isArray(products) || products.length === 0) {
     res.status(400).json({ error: 'Debe proporcionar productos válidos' });
@@ -59,6 +66,10 @@ app.post('/api/carts', (req, res) => {
   res.status(201).json({ id: cartId, message: 'Carrito creado exitosamente' });
 });
 
-app.listen(8080, () => {
+const server = app.listen(8080, () => {
   console.log('Servidor escuchando en el puerto 8080');
+});
+
+server.on('listening', () => {
+  productManager.archiveProducts();
 });

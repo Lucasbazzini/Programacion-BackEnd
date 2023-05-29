@@ -1,23 +1,17 @@
 import express from 'express';
 import ProductManager from './ProductManager.js';
+import CartManager from './CartManager.js';
 
 const productManager = new ProductManager('./productos.json');
-productManager.archiveProducts(); 
+const cartManager = new CartManager('./carritos.json');
 
 const app = express();
 
 app.use(express.json());
 
-function generateCartId() {
-  const timestamp = Date.now();
-  const random = Math.floor(Math.random() * 1000);
-  return `${timestamp}-${random}`;
-}
-
 app.get('/api/products', (req, res) => {
   const limit = req.query.limit;
-  let products = productManager.getProducts(limit);
-
+  const products = productManager.getProducts(limit);
   res.json(products);
 });
 
@@ -50,20 +44,52 @@ app.delete('/api/products/:id', (req, res) => {
   res.sendStatus(200);
 });
 
-app.post('/api/cart', (req, res) => {
+app.post('/api/carts', (req, res) => {
   const { products } = req.body;
   if (!products || !Array.isArray(products) || products.length === 0) {
     res.status(400).json({ error: 'Debe proporcionar productos válidos' });
     return;
   }
+  const cart = cartManager.createCart(products);
+  res.status(201).json({ id: cart.id, message: 'Carrito creado exitosamente' });
+});
 
-  const cartId = generateCartId();
-  const newCart = {
-    id: cartId,
-    products: products
-  };
+app.get('/api/carts/:id', (req, res) => {
+  const cartId = req.params.id;
+  const cart = cartManager.getCartById(cartId);
+  if (cart) {
+    res.json(cart);
+  } else {
+    res.status(404).json({ error: 'Carrito no encontrado' });
+  }
+});
 
-  res.status(201).json({ id: cartId, message: 'Carrito creado exitosamente' });
+app.post('/api/carts/:id/products/:productId', (req, res) => {
+  const cartId = req.params.id;
+  const productId = parseInt(req.params.productId);
+  cartManager.addToCart(cartId, productId);
+  res.sendStatus(200);
+});
+
+app.delete('/api/carts/:id/products/:productId', (req, res) => {
+  const cartId = req.params.id;
+  const productId = parseInt(req.params.productId);
+  cartManager.removeFromCart(cartId, productId);
+  res.sendStatus(200);
+});
+
+app.post('/api/carts/:id/products/:productId/increase', (req, res) => {
+  const cartId = req.params.id;
+  const productId = parseInt(req.params.productId);
+  cartManager.increaseQuantity(cartId, productId);
+  res.sendStatus(200);
+});
+
+app.post('/api/carts/:id/products/:productId/decrease', (req, res) => {
+  const cartId = req.params.id;
+  const productId = parseInt(req.params.productId);
+  cartManager.decreaseQuantity(cartId, productId);
+  res.sendStatus(200);
 });
 
 const server = app.listen(8080, () => {
@@ -72,4 +98,5 @@ const server = app.listen(8080, () => {
 
 server.on('listening', () => {
   productManager.archiveProducts();
+  cartManager.archiveCarts();
 });

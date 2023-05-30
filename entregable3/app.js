@@ -26,8 +26,8 @@ app.get('/api/products/:id', (req, res) => {
 });
 
 app.post('/api/products', (req, res) => {
-  const { title, description, price, code, stock, thumbnails } = req.body;
-  productManager.addProduct(title, description, price, code, stock, thumbnails);
+  const { title, description, price, stock, thumbnails } = req.body;
+  productManager.addProduct(title, description, price, stock, thumbnails);
   res.sendStatus(201);
 });
 
@@ -45,14 +45,15 @@ app.delete('/api/products/:id', (req, res) => {
 });
 
 app.post('/api/carts', (req, res) => {
-  const { products } = req.body;
-  if (!products || !Array.isArray(products) || products.length === 0) {
-    res.status(400).json({ error: 'Debe proporcionar productos válidos' });
-    return;
-  }
-  const cart = cartManager.createCart(products);
+  const cart = cartManager.createCart([]);
   res.status(201).json({ id: cart.id, message: 'Carrito creado exitosamente' });
 });
+
+app.get('/api/carts', (req, res) => {
+  const carts = cartManager.getAllCarts();
+  res.json(carts);
+});
+
 
 app.get('/api/carts/:id', (req, res) => {
   const cartId = req.params.id;
@@ -78,19 +79,25 @@ app.delete('/api/carts/:id/products/:productId', (req, res) => {
   res.sendStatus(200);
 });
 
-app.post('/api/carts/:id/products/:productId/increase', (req, res) => {
-  const cartId = req.params.id;
-  const productId = parseInt(req.params.productId);
-  cartManager.increaseQuantity(cartId, productId);
-  res.sendStatus(200);
-});
 
-app.post('/api/carts/:id/products/:productId/decrease', (req, res) => {
-  const cartId = req.params.id;
-  const productId = parseInt(req.params.productId);
-  cartManager.decreaseQuantity(cartId, productId);
-  res.sendStatus(200);
-});
+
+
+//     -----------LOGICA PARA AGREGAR DE A MAS DE 1-----------
+// app.post('/api/carts/:id/products/:productId/increase', (req, res) => {
+//   const cartId = req.params.id;
+//   const productId = parseInt(req.params.productId);
+//   cartManager.increaseQuantity(cartId, productId);
+//   res.sendStatus(200);
+// });
+
+// app.post('/api/carts/:id/products/:productId/decrease', (req, res) => {
+//   const cartId = req.params.id;
+//   const productId = parseInt(req.params.productId);
+//   cartManager.decreaseQuantity(cartId, productId);
+//   res.sendStatus(200);
+// });
+
+
 
 const server = app.listen(8080, () => {
   console.log('Servidor escuchando en el puerto 8080');

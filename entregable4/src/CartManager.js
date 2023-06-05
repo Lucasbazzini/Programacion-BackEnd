@@ -12,7 +12,7 @@ class CartManager {
     const cartId = this.generateCartId();
     const newCart = {
       id: cartId,
-      products: products.map(productId => ({ productId, quantity: 1 }))
+      products: products.map((productId) => ({ productId, quantity: 1 })),
     };
     this.carts.push(newCart);
     this.archiveCarts();
@@ -20,15 +20,15 @@ class CartManager {
   }
 
   getCartById(cartId) {
-    return this.carts.find(cart => cart.id === cartId);
+    return this.carts.find((cart) => cart.id === cartId);
   }
 
   addToCart(cartId, productId) {
-    const cart = this.carts.find(cart => cart.id === cartId);
+    const cart = this.carts.find((cart) => cart.id === cartId);
     if (!cart) {
       return;
     }
-    const existingItem = cart.products.find(item => item.productId === productId);
+    const existingItem = cart.products.find((item) => item.productId === productId);
     if (existingItem) {
       existingItem.quantity++;
     } else {
@@ -38,11 +38,11 @@ class CartManager {
   }
 
   removeFromCart(cartId, productId) {
-    const cart = this.carts.find(cart => cart.id === cartId);
+    const cart = this.carts.find((cart) => cart.id === cartId);
     if (!cart) {
       return;
     }
-    const existingItemIndex = cart.products.findIndex(item => item.productId === productId);
+    const existingItemIndex = cart.products.findIndex((item) => item.productId === productId);
     if (existingItemIndex !== -1) {
       const existingItem = cart.products[existingItemIndex];
       if (existingItem.quantity > 1) {

@@ -11,7 +11,17 @@ class ProductManager {
   addProduct(title, description, price, stock, thumbnails = []) {
     if (title && description && price && stock) {
       const id = this.id++;
-      const newProduct = { id, title, description, price, stock, thumbnails, status: true, category: '', code: this.generateCode() };
+      const newProduct = {
+        id,
+        title,
+        description,
+        price,
+        stock,
+        thumbnails,
+        status: true,
+        category: '',
+        code: this.generateCode(),
+      };
       this.products.push(newProduct);
 
       this.archiveProducts();
@@ -21,7 +31,7 @@ class ProductManager {
   }
 
   deleteProduct(id) {
-    const index = this.products.findIndex(product => product.id === id);
+    const index = this.products.findIndex((product) => product.id === id);
     if (index === -1) {
       return;
     }
@@ -30,13 +40,13 @@ class ProductManager {
   }
 
   updateProduct(id, newObject) {
-    const productIndex = this.products.findIndex(product => product.id === id);
+    const productIndex = this.products.findIndex((product) => product.id === id);
     if (productIndex === -1) {
       return;
     }
     const updatedProduct = {
       ...this.products[productIndex],
-      ...newObject
+      ...newObject,
     };
     this.products[productIndex] = updatedProduct;
     this.archiveProducts();
@@ -50,7 +60,7 @@ class ProductManager {
   }
 
   getProductById(id) {
-    return this.products.find(product => product.id === id);
+    return this.products.find((product) => product.id === id);
   }
 
   loadProducts() {

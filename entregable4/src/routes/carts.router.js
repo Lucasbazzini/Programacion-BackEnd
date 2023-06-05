@@ -1,6 +1,6 @@
 import express from 'express';
 
-function createCartsRouter(cartManager) {
+function createCartsRouter(cartManager, io) {
   const router = express.Router();
 
   router.post('/', (req, res) => {
@@ -28,6 +28,7 @@ function createCartsRouter(cartManager) {
     const productId = parseInt(req.params.productId);
     cartManager.addToCart(cartId, productId);
     res.sendStatus(200);
+    io.emit('cartUpdated', cartManager.getCartById(cartId));
   });
 
   router.delete('/:id/products/:productId', (req, res) => {
@@ -35,6 +36,7 @@ function createCartsRouter(cartManager) {
     const productId = parseInt(req.params.productId);
     cartManager.removeFromCart(cartId, productId);
     res.sendStatus(200);
+    io.emit('cartUpdated', cartManager.getCartById(cartId));
   });
 
   return router;

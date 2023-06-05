@@ -1,0 +1,43 @@
+import express from 'express';
+
+function createCartsRouter(cartManager) {
+  const router = express.Router();
+
+  router.post('/', (req, res) => {
+    const cart = cartManager.createCart([]);
+    res.status(201).json({ id: cart.id, message: 'Carrito creado exitosamente' });
+  });
+
+  router.get('/', (req, res) => {
+    const carts = cartManager.getAllCarts();
+    res.json(carts);
+  });
+
+  router.get('/:id', (req, res) => {
+    const cartId = req.params.id;
+    const cart = cartManager.getCartById(cartId);
+    if (cart) {
+      res.json(cart);
+    } else {
+      res.status(404).json({ error: 'Carrito no encontrado' });
+    }
+  });
+
+  router.post('/:id/products/:productId', (req, res) => {
+    const cartId = req.params.id;
+    const productId = parseInt(req.params.productId);
+    cartManager.addToCart(cartId, productId);
+    res.sendStatus(200);
+  });
+
+  router.delete('/:id/products/:productId', (req, res) => {
+    const cartId = req.params.id;
+    const productId = parseInt(req.params.productId);
+    cartManager.removeFromCart(cartId, productId);
+    res.sendStatus(200);
+  });
+
+  return router;
+}
+
+export default createCartsRouter;

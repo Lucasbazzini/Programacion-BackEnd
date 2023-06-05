@@ -1,5 +1,3 @@
-//---Actividad---
-
 class ProductManager {
     constructor() { 
         this.products = [];
@@ -42,4 +40,3 @@ pManager.addProduct("Fideos", "con tuco", 20, "url", 124, 25);
 pManager.addProduct("Fideos", "con tuco", 20, "url", 125, 25);
 pManager.addProduct("Fideos", "con tuco", 20, "url", 126, 25);
 pManager.getProductById(2);
-

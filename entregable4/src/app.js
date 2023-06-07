@@ -17,10 +17,9 @@ const hbs = exphbs.create();
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-
+app.set('io', io )
 
 app.use(express.json());
-
 app.use(express.static('public'));
 
 app.use('/api/products', productsRouter(productManager, io));
@@ -36,6 +35,11 @@ app.get('/realtimeproducts', (req, res) => {
   res.render('realTimeProducts', { products });
 });
 
+function sendProductList() {
+  const products = productManager.getProducts();
+  io.emit('productListUpdated', products);
+}
+
 io.on('connection', (socket) => {
   console.log('Cliente conectado');
 
@@ -45,12 +49,12 @@ io.on('connection', (socket) => {
 
   socket.on('productCreated', (product) => {
     productManager.addProduct(product.title, product.description, product.price, product.stock);
-    io.emit('productUpdated', productManager.getProducts());
+    sendProductList();
   });
 
   socket.on('productDeleted', (productId) => {
     productManager.deleteProduct(productId);
-    io.emit('productUpdated', productManager.getProducts());
+    sendProductList();
   });
 });
 

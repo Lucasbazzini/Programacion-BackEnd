@@ -23,7 +23,6 @@ class ProductManager {
         code: this.generateCode(),
       };
       this.products.push(newProduct);
-
       this.archiveProducts();
     } else {
       console.log('ERROR: Debe completar todos los campos');
@@ -63,42 +62,35 @@ class ProductManager {
     return this.products.find((product) => product.id === id);
   }
 
-  loadProducts() {
-    try {
-      const data = fs.readFileSync(this.path, 'utf-8');
-      this.products = JSON.parse(data);
-    } catch (error) {
-      if (error.code === 'ENOENT') {
-        this.archiveProducts();
-      } else {
-        console.error(error);
-      }
-    }
+  generateCode() {
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const randomCode = Math.random().toString(36).substr(2, 5).toUpperCase();
+    return `${timestamp}-${randomCode}`;
   }
 
   archiveProducts() {
-    try {
-      const jsonData = JSON.stringify(this.products);
-      fs.writeFileSync(this.path, jsonData);
-    } catch (error) {
-      console.error(error);
-    }
+    fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2));
   }
 
-  generateCode() {
-    const code = 'CODE-' + this.id.toString().padStart(4, '0');
-    return code;
+  loadProducts() {
+    try {
+      const fileContents = fs.readFileSync(this.path, 'utf-8');
+      this.products = JSON.parse(fileContents);
+      this.id = this.calculateNextId();
+    } catch (error) {
+      console.log('No se pudo cargar el archivo de productos. Se creará uno nuevo.');
+      this.archiveProducts();
+    }
   }
 
   calculateNextId() {
-    if (this.products.length === 0) {
-      return 1;
-    } else {
-      const maxId = this.products.reduce((max, product) => {
-        return product.id > max ? product.id : max;
-      }, 0);
-      return maxId + 1;
+    let maxId = 0;
+    for (const product of this.products) {
+      if (product.id > maxId) {
+        maxId = product.id;
+      }
     }
+    return maxId + 1;
   }
 }
 

@@ -1,101 +1,57 @@
 [
   {
-    "id": 4,
-    "title": "cuarto producto",
-    "description": "Agregado correctamente",
+    "id": 1,
+    "title": "Producto de prueba realtime",
+    "description": "Agregado",
     "price": 78,
     "stock": 19,
     "thumbnails": [],
     "status": true,
     "category": "",
-    "code": "CODE-0005"
+    "code": "LIMBEXR2-7EL3X"
   },
   {
-    "id": 5,
-    "title": "quinto producto",
-    "description": "Agregado correctamente",
+    "id": 2,
+    "title": "Producto de prueba realtime 2",
+    "description": "Agregado",
     "price": 78,
     "stock": 19,
     "thumbnails": [],
     "status": true,
     "category": "",
-    "code": "CODE-0006"
+    "code": "LIMBFBT6-CYEEE"
+  },
+  {
+    "id": 3,
+    "title": "Producto de prueba realtime 2",
+    "description": "Agregado",
+    "price": 78,
+    "stock": 19,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIMBFTGF-BMW8K"
+  },
+  {
+    "id": 4,
+    "title": "Producto de prueba realtime 2",
+    "description": "Agregado",
+    "price": 78,
+    "stock": 19,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIMBKKXM-P4N62"
   },
   {
     "id": 6,
-    "title": "sexto producto",
-    "description": "Agregado correctamente",
+    "title": "Producto de prueba realtime 2",
+    "description": "Agregado",
     "price": 78,
     "stock": 19,
     "thumbnails": [],
     "status": true,
     "category": "",
-    "code": "CODE-0007"
-  },
-  {
-    "id": 7,
-    "title": "septimo producto",
-    "description": "Agregado correctamente",
-    "price": 78,
-    "stock": 19,
-    "thumbnails": [],
-    "status": true,
-    "category": "",
-    "code": "CODE-0008"
-  },
-  {
-    "id": 8,
-    "title": " producto DE PRUEBA EN VIVO",
-    "description": "Agregado correctamente",
-    "price": 78,
-    "stock": 19,
-    "thumbnails": [],
-    "status": true,
-    "category": "",
-    "code": "CODE-0009"
-  },
-  {
-    "id": 9,
-    "title": " producto de prueba categoria",
-    "description": "Agregado correctamente",
-    "price": 78,
-    "stock": 19,
-    "thumbnails": [],
-    "status": true,
-    "category": "",
-    "code": "CODE-0010"
-  },
-  {
-    "id": 10,
-    "title": " producto de prueba categoria",
-    "description": "Agregado correctamente",
-    "price": 78,
-    "stock": 19,
-    "thumbnails": [],
-    "status": true,
-    "category": "",
-    "code": "CODE-0011"
-  },
-  {
-    "id": 11,
-    "title": " producto de prueba categoria",
-    "description": "Agregado correctamente",
-    "price": 78,
-    "stock": 19,
-    "thumbnails": [],
-    "status": true,
-    "category": "",
-    "code": "CODE-0012"
-  },
-  {
-    "id": 12,
-    "title": " producto de prueba categoria",
-    "description": "Agregado correctamente",
-    "price": 78,
-    "stock": 19,
-    "thumbnails": [],
-    "status": true,
-    "category": "",
-    "code": "LIJDBAAB-2TY2H"
+    "code": "LIMBKLU8-3Z544"
   }
 ]

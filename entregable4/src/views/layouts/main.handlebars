@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Nombre de tu aplicación</title>
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
             box-sizing: border-box;
             font-family: sans-serif;
-            
+
         }
-        
+
         header {
             margin: 10px;
             background-color: #333;
@@ -32,10 +33,35 @@
             margin: 20px;
         }
 
-        li{
+        input {
+            width: 200px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+
+        button {
+            width: 200px;
+            border-radius: 15px;
+            border: 1px solid grey;
+        }
+
+        li {
             font-size: larger;
             list-style: none;
+            max-width: 300px;
+            min-width: 300px;
             margin: 10px;
+            background-color: beige;
+            min-height: 400px;
+            max-height: 400px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
         }
 
         footer {
@@ -44,20 +70,25 @@
             padding: 20px;
             text-align: center;
         }
-        ul{
+
+        ul {
+            gap: 3px;
+            flex-wrap: wrap;
             display: flex;
             align-items: center;
             justify-content: center;
-            
+            background-color: grey;
         }
-        .box{
+
+        .box {
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
             flex-direction: row;
             display: flex;
         }
-        .unidad{
+
+        .unidad {
             border-radius: 5px;
             align-items: center;
             display: flex;
@@ -70,6 +101,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Logo o título de tu aplicación</h1>
@@ -83,4 +115,5 @@
         <p>created by LucasBazzini</p>
     </footer>
 </body>
+
 </html>

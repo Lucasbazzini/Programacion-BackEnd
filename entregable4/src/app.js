@@ -17,7 +17,7 @@ const hbs = exphbs.create();
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-app.set('io', io )
+app.set('io', io)
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -41,20 +41,13 @@ function sendProductList() {
 }
 
 io.on('connection', (socket) => {
-  console.log('Cliente conectado');
+  console.log('Cliente conectado', socket.id);
 
-  socket.on('disconnect', () => {
-    console.log('Cliente desconectado');
-  });
+  socket.emit('products', productManager.getProducts());
 
-  socket.on('productCreated', (product) => {
-    productManager.addProduct(product.title, product.description, product.price, product.stock);
-    sendProductList();
-  });
-
-  socket.on('productDeleted', (productId) => {
-    productManager.deleteProduct(productId);
-    sendProductList();
+  socket.on('new-product', (data) => {
+    productManager.addProduct(data);
+    io.emit('products', productManager.getProducts());
   });
 });
 

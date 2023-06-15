@@ -1,38 +1,5 @@
 [
   {
-    "id": 1,
-    "title": "Producto de prueba realtime",
-    "description": "Agregado",
-    "price": 78,
-    "stock": 19,
-    "thumbnails": [],
-    "status": true,
-    "category": "",
-    "code": "LIMBEXR2-7EL3X"
-  },
-  {
-    "id": 2,
-    "title": "Producto de prueba realtime 2",
-    "description": "Agregado",
-    "price": 78,
-    "stock": 19,
-    "thumbnails": [],
-    "status": true,
-    "category": "",
-    "code": "LIMBFBT6-CYEEE"
-  },
-  {
-    "id": 3,
-    "title": "Producto de prueba realtime 2",
-    "description": "Agregado",
-    "price": 78,
-    "stock": 19,
-    "thumbnails": [],
-    "status": true,
-    "category": "",
-    "code": "LIMBFTGF-BMW8K"
-  },
-  {
     "id": 4,
     "title": "Producto de prueba realtime 2",
     "description": "Agregado",
@@ -53,5 +20,115 @@
     "status": true,
     "category": "",
     "code": "LIMBKLU8-3Z544"
+  },
+  {
+    "id": 7,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 200,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIWMCRPT-O0UAG"
+  },
+  {
+    "id": 8,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 100,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIWMEU4W-VDPXA"
+  },
+  {
+    "id": 9,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 100,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIWMK597-PUAI3"
+  },
+  {
+    "id": 10,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 100,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIWMK62S-862ES"
+  },
+  {
+    "id": 11,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 100,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIWMP4MY-MVDHE"
+  },
+  {
+    "id": 12,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 100,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIX8618Y-E2JZZ"
+  },
+  {
+    "id": 13,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 100,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIX862YX-F4WJ3"
+  },
+  {
+    "id": 14,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 100,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIX863F3-OWMZ6"
+  },
+  {
+    "id": 15,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 100,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIX8QCZX-2O3Q8"
+  },
+  {
+    "id": 16,
+    "title": "producto 2",
+    "description": "producto agregado",
+    "price": 200,
+    "stock": 100,
+    "thumbnails": [],
+    "status": true,
+    "category": "",
+    "code": "LIX9Y9A2-PLPXI"
   }
 ]

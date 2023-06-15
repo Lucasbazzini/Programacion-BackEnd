@@ -2,16 +2,29 @@
 <html>
 <head>
   <title>Lista de Productos en Tiempo Real</title>
-  
-  
 </head>
 <body>
   <h1 style="text-align: center;">Lista de Productos en Tiempo Real</h1>
-  <ul>
+  <form id="productForm">
+    <label for="title">Título:</label>
+    <input type="text" id="title" name="title" required><br>
+    <label for="description">Descripción:</label>
+    <input type="text" id="description" name="description" required><br>
+    <label for="category">Categoría:</label>
+    <input type="text" id="category" name="category" required><br>
+    <label for="code">Código:</label>
+    <input type="text" id="code" name="code" required><br>
+    <label for="price">Precio:</label>
+    <input type="number" id="price" name="price" required><br>
+    <label for="stock">Stock:</label>
+    <input type="number" id="stock" name="stock" required><br>
+    <button type="submit" id="btn-submit">Agregar Producto</button>
+  </form>
+  <ul id="productList">
     <div class="box">
       {{#each products}}
       <div class="unidad">
-        <li ><b>id del producto:</b>{{this.id}}<br><b>Nombre de producto:</b><br>{{this.title}} <br> <b>estado de producto:</b> {{this.description}} <br> $ {{this.price}}
+        <li><b>id del producto:</b>{{this.id}}<br><b>Nombre de producto:</b><br>{{this.title}} <br> <b>estado de producto:</b> {{this.description}} <br> $ {{this.price}}
           <br> <b>Stock:</b>{{this.stock}} <br><b>categoria:</b>{{this.category}}
         </li>
       </div>
@@ -19,20 +32,50 @@
     </div>
   </ul>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/index.js"></script>
   <script>
     const socket = io();
 
-    socket.on('productUpdated', (products) => {
-      const productList = document.getElementById('productList');
-      productList.innerHTML = '';
+    const submit = document.getElementById("btn-submit");
+    const title = document.getElementById("title");
+    const description = document.getElementById("description");
+    const category = document.getElementById("category");
+    const code = document.getElementById("code");
+    const price = document.getElementById("price");
+    const stock = document.getElementById("stock");
+    const productForm = document.getElementById("productForm");
 
-      products.forEach((product) => {
-        const listItem = document.createElement('li');
-        listItem.innerText = `${product.title} - ${product.description} - ${product.price} - ${product.stock}`;
-        productList.appendChild(listItem);
+    submit.addEventListener("click", (e) => {
+      e.preventDefault();
+      socket.emit("new-product", {
+        title: title.value,
+        description: description.value,
+        category: category.value,
+        code: code.value,
+        price: price.value,
+        stock: stock.value
       });
+      productForm.reset();
     });
+
+  socket.on("products", (data) => {
+  const products = document.getElementById("productList");
+
+  const renderProducts = data.map((product) => {
+    return `
+      <div class="unidad">
+        <li>
+          <b>id del producto:</b> ${product.id}<br>
+          <b>Nombre de producto:</b><br>${product.title}<br>
+          <b>Estado de producto:</b> ${product.description}<br>
+          $ ${product.price}<br>
+          <b>Stock:</b> ${product.stock}<br>
+          <b>Categoría:</b> ${product.category}
+        </li>
+      </div>`;
+  });
+
+  products.innerHTML = renderProducts.join("");
+});
   </script>
 </body>
 </html>
